@@ -1,6 +1,6 @@
 # clara
 
-a complete integrated agent at one place... Clara
+A new Flutter project.
 
 ## Getting Started
 
