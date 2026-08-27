@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.clara.agent.org.ui.components.MessageInput
 import com.clara.agent.org.ui.theme.ClaraTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +38,10 @@ fun ClaraApp() {
             Button(onClick = { /* Handle click */ }) {
                 Text("Click Me")
             }
+
+            MessageInput(
+                onSendMessage = {}
+            )
         }
     }
 }
