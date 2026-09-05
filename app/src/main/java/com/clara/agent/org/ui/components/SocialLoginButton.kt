@@ -20,6 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+/**
+ * A customizable social login button with optional icon and loading indicator.
+ *
+ * @param text the button label.
+ * @param onClick callback invoked when the button is clicked (if enabled and not loading).
+ * @param containerColor background color of the button.
+ * @param contentColor color of the text, icon, and progress indicator.
+ * @param modifier optional modifier for the button.
+ * @param enabled whether the button is enabled. Defaults to `true`.
+ * @param isLoading whether to show a loading spinner instead of content. Defaults to `false`.
+ * @param icon optional composable icon placed before the text. Only shown when not loading.
+ */
 @Composable
 fun SocialLoginButton(
     text: String,
@@ -31,6 +43,13 @@ fun SocialLoginButton(
     isLoading: Boolean = false,
     icon: @Composable (() -> Unit)? = null
 ) {
+    // Show a border only when the background is white to ensure visibility on light surfaces.
+    val border = if (containerColor == Color.White) {
+        ButtonDefaults.outlinedButtonBorder(enabled = enabled)
+    } else {
+        null
+    }
+
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
@@ -44,7 +63,7 @@ fun SocialLoginButton(
             disabledContainerColor = containerColor.copy(alpha = 0.6f),
             disabledContentColor = contentColor.copy(alpha = 0.6f)
         ),
-        border = if (containerColor == Color.White) ButtonDefaults.outlinedButtonBorder(enabled = enabled) else null
+        border = border
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

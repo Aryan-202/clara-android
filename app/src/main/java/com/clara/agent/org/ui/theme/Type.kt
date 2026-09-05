@@ -6,6 +6,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+/**
+ * App-wide typography definitions.
+ *
+ * Provides consistent text styles for different Material roles,
+ * using the sans-serif font family.
+ */
 val Typography = Typography(
     headlineMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,

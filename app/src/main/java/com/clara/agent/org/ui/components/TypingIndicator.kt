@@ -7,6 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * Displays a subtle typing indicator when [isTyping] is `true`.
+ *
+ * @param isTyping whether to show the typing indicator.
+ */
 @Composable
 fun TypingIndicator(
     isTyping: Boolean

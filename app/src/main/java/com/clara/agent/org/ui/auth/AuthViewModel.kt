@@ -1,6 +1,7 @@
 package com.clara.agent.org.ui.auth
 
 import android.content.Context
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clara.agent.org.BuildConfig
@@ -12,6 +13,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel responsible for handling authentication-related UI state and actions.
+ *
+ * @param authRepository repository used for authentication operations. Defaults to
+ * [AuthRepositoryImpl].
+ */
 class AuthViewModel(
     private val authRepository: AuthRepository = AuthRepositoryImpl()
 ) : ViewModel() {
@@ -19,6 +26,9 @@ class AuthViewModel(
     private val _authState = MutableStateFlow<AuthResult<String>>(AuthResult.Idle)
     val authState: StateFlow<AuthResult<String>> = _authState.asStateFlow()
 
+    /**
+     * Initiates Google Sign-In using the provided [context].
+     */
     fun signInWithGoogle(context: Context) {
         viewModelScope.launch {
             _authState.value = AuthResult.Loading
@@ -28,10 +38,18 @@ class AuthViewModel(
         }
     }
 
+    /**
+     * Simulates email sign-in after validating the email address.
+     *
+     * For demonstration purposes, it returns a mock token. Replace with real authentication
+     * logic when integrating a backend.
+     *
+     * @param email the email address entered by the user.
+     */
     fun signInWithEmail(email: String) {
         viewModelScope.launch {
-            if (email.isBlank() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                _authState.value = AuthResult.Error("Please enter a valid email address.")
+            if (!isValidEmail(email)) {
+                _authState.value = AuthResult.Error(INVALID_EMAIL_MESSAGE)
                 return@launch
             }
             _authState.value = AuthResult.Loading
@@ -40,7 +58,18 @@ class AuthViewModel(
         }
     }
 
+    /**
+     * Resets the authentication state to [AuthResult.Idle].
+     */
     fun resetAuthState() {
         _authState.value = AuthResult.Idle
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    companion object {
+        private const val INVALID_EMAIL_MESSAGE = "Please enter a valid email address."
     }
 }

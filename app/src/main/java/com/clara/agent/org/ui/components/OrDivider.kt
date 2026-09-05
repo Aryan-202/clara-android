@@ -11,6 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * A horizontal divider with an optional text label in the middle, commonly used to separate
+ * alternative sign-in options.
+ *
+ * @param modifier optional modifier for the root composable.
+ * @param text the label displayed between the dividers. Defaults to "OR".
+ */
 @Composable
 fun OrDivider(
     modifier: Modifier = Modifier,

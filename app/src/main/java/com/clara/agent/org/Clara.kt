@@ -10,6 +10,10 @@ import com.clara.agent.org.ui.screens.ChatScreen
 import com.clara.agent.org.ui.screens.LoginScreen
 import com.clara.agent.org.ui.theme.ClaraTheme
 
+/**
+ * Root composable that decides whether to show the login screen or the chat screen
+ * based on the current authentication state.
+ */
 @Composable
 fun ClaraApp() {
     var isLoggedIn by remember { mutableStateOf(false) }
@@ -23,9 +27,12 @@ fun ClaraApp() {
     }
 }
 
+/**
+ * Preview for [ClaraApp] wrapped in the app theme.
+ */
 @Preview(showBackground = true)
 @Composable
-fun PreviewClaraApp() {
+private fun PreviewClaraApp() {
     ClaraTheme {
         ClaraApp()
     }

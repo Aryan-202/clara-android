@@ -47,6 +47,12 @@ import com.clara.agent.org.ui.components.SocialLoginButton
 import com.clara.agent.org.ui.theme.ClaraIcons
 import com.clara.agent.org.ui.theme.ClaraTheme
 
+/**
+ * Login screen that offers Google Sign-In, phone (placeholder), and email entry.
+ *
+ * @param onLoginSuccess callback invoked when login succeeds.
+ * @param viewModel the [AuthViewModel] that manages authentication state.
+ */
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit = {},
@@ -58,6 +64,7 @@ fun LoginScreen(
     val authState by viewModel.authState.collectAsState()
     val scrollState = rememberScrollState()
 
+    // Handle authentication state changes.
     LaunchedEffect(authState) {
         when (val state = authState) {
             is AuthResult.Success -> {
@@ -65,27 +72,36 @@ fun LoginScreen(
                 viewModel.resetAuthState()
                 onLoginSuccess()
             }
+
             is AuthResult.Error -> {
                 errorMessage = state.message
             }
-            else -> {}
+
+            else -> Unit
         }
     }
 
+    // Show error dialog if there is an error message.
     if (errorMessage != null) {
         AlertDialog(
             onDismissRequest = {
                 errorMessage = null
                 viewModel.resetAuthState()
             },
-            title = { Text("Sign-In Information") },
-            text = { Text(errorMessage ?: "") },
+            title = {
+                Text(text = "Sign-In Information")
+            },
+            text = {
+                Text(text = errorMessage.orEmpty())
+            },
             confirmButton = {
-                Button(onClick = {
-                    errorMessage = null
-                    viewModel.resetAuthState()
-                }) {
-                    Text("OK")
+                Button(
+                    onClick = {
+                        errorMessage = null
+                        viewModel.resetAuthState()
+                    }
+                ) {
+                    Text(text = "OK")
                 }
             }
         )
@@ -156,7 +172,7 @@ fun LoginScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email address") },
+                label = { Text(text = "Email address") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
@@ -192,7 +208,7 @@ fun LoginScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
+private fun LoginScreenPreview() {
     ClaraTheme {
         LoginScreen()
     }
