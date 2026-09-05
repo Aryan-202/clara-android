@@ -46,7 +46,7 @@ class AuthRepositoryImpl : AuthRepository {
             return parseCredentialResult(result.credential)
         } catch (e: GetCredentialCancellationException) {
             Log.i(TAG, "User canceled Google Sign-In: ${e.message}")
-            return AuthResult.Error("Sign-in was canceled.")
+            return AuthResult.Idle
         } catch (e: GetCredentialException) {
             Log.w(TAG, "GetSignInWithGoogleOption exception (${e.javaClass.simpleName}): ${e.message}. Trying GetGoogleIdOption...", e)
         } catch (e: Exception) {
@@ -74,7 +74,7 @@ class AuthRepositoryImpl : AuthRepository {
             return parseCredentialResult(result.credential)
         } catch (e: GetCredentialCancellationException) {
             Log.i(TAG, "User canceled Google Sign-In: ${e.message}")
-            return AuthResult.Error("Sign-in was canceled.")
+            return AuthResult.Idle
         } catch (e: GetCredentialException) {
             Log.e(TAG, "GetGoogleIdOption failed (${e.javaClass.simpleName}): ${e.message}", e)
             return AuthResult.Error("Google Sign-In failed: ${e.localizedMessage}")

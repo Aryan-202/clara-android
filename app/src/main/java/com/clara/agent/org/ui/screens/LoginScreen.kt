@@ -44,6 +44,7 @@ import com.clara.agent.org.data.auth.AuthResult
 import com.clara.agent.org.ui.auth.AuthViewModel
 import com.clara.agent.org.ui.components.OrDivider
 import com.clara.agent.org.ui.components.SocialLoginButton
+import com.clara.agent.org.ui.theme.ClaraIcons
 import com.clara.agent.org.ui.theme.ClaraTheme
 
 @Composable
@@ -120,16 +121,17 @@ fun LoginScreen(
                 text = "Continue with Google",
                 onClick = { viewModel.signInWithGoogle(context) },
                 containerColor = Color.White,
-                contentColor = Color.Black
-            )
-
-            SocialLoginButton(
-                text = "Continue with Apple",
-                onClick = {
-                    Toast.makeText(context, "Apple Sign-In coming soon", Toast.LENGTH_SHORT).show()
-                },
-                containerColor = Color.Black,
-                contentColor = Color.White
+                contentColor = Color.Black,
+                enabled = authState !is AuthResult.Loading,
+                isLoading = authState is AuthResult.Loading,
+                icon = {
+                    Icon(
+                        imageVector = ClaraIcons.Google,
+                        contentDescription = "Google Icon",
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.Unspecified
+                    )
+                }
             )
 
             SocialLoginButton(
@@ -139,6 +141,7 @@ fun LoginScreen(
                 },
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                enabled = authState !is AuthResult.Loading,
                 icon = {
                     Icon(
                         imageVector = Icons.Default.Phone,
